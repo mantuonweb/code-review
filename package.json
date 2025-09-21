@@ -1,0 +1,29 @@
+{
+  "name": "code-review",
+  "version": "1.0.0",
+  "description": "Automated code review server using LLaMA and OpenAI.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mantuonweb/code-review.git"
+  },
+  "keywords": [],
+  "author": "Mantu Nigam",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/mantuonweb/code-review/issues"
+  },
+  "homepage": "https://github.com/mantuonweb/code-review#readme",
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "openai": "^5.22.0"
+  }
+}

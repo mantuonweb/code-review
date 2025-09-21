@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+
+  ai-review-app:
+    build: .
+    container_name: ai-review-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+
+volumes:
+  ollama_models:
