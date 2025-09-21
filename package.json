@@ -1,29 +1,53 @@
 {
-  "name": "code-review",
+  "name": "ai-code-review",
   "version": "1.0.0",
-  "description": "Automated code review server using LLaMA and OpenAI.",
-  "main": "src/server.js",
-  "scripts": {
-    "start": "node src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mantuonweb/code-review.git"
-  },
-  "keywords": [],
-  "author": "Mantu Nigam",
-  "license": "ISC",
+  "description": "AI-powered code review service using Ollama and LLaMA",
+  "main": "src/app.js",
   "type": "module",
-  "bugs": {
-    "url": "https://github.com/mantuonweb/code-review/issues"
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "node test-ollama.js",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:restart": "docker-compose restart",
+    "docker:logs": "docker-compose logs -f",
+    "docker:logs:app": "docker-compose logs -f ai-review-app",
+    "docker:logs:ollama": "docker-compose logs -f ollama",
+    "ollama:pull": "docker-compose exec ollama ollama pull llama3.2:1b",
+    "ollama:pull:large": "docker-compose exec ollama ollama pull llama3",
+    "ollama:list": "docker-compose exec ollama ollama list",
+    "ollama:test": "docker-compose exec ollama ollama run llama3.2:1b 'Hello, test message'",
+    "ollama:tags": "docker-compose exec ollama curl http://localhost:11434/api/tags",
+    "setup": "npm run docker:build && npm run docker:up && npm run ollama:pull",
+    "setup:full": "npm run docker:build && npm run docker:up && npm run ollama:pull:large",
+    "reset": "npm run docker:down && docker volume rm code-review_ollama_models && npm run setup",
+    "health": "curl http://localhost:3000/health",
+    "health:ollama": "curl http://localhost:11434/api/tags",
+    "test:api": "curl -X POST http://localhost:3000/review -F 'file=@test-files/sample.js'",
+    "clean": "docker-compose down && docker system prune -f",
+    "clean:all": "docker-compose down && docker system prune -af && docker volume prune -f"
   },
-  "homepage": "https://github.com/mantuonweb/code-review#readme",
   "dependencies": {
-    "dotenv": "^17.2.2",
-    "express": "^5.1.0",
-    "multer": "^2.0.2",
-    "node-fetch": "^3.3.2",
-    "openai": "^5.22.0"
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "ai",
+    "code-review",
+    "ollama",
+    "llama",
+    "express",
+    "docker"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
